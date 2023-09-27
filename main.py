@@ -1,7 +1,7 @@
 from collections import UserDict
 from datetime import datetime
 import re
-import json
+import pickle
 
 class Field:
     def __init__(self, value):
@@ -131,13 +131,13 @@ class AddressBook(UserDict):
 
     def save_to_file(self, filename):
         data = {"contacts": self.data}
-        with open(filename, "w") as f:
-            json.dump(data, f)
+        with open(filename, "wb") as f:
+            pickle.dump(data, f)
 
     def load_data(self, filename):
         try:
-            with open(filename, 'r') as f:
-                data = json.load(f)
+            with open(filename, 'rb') as f:
+                data = pickle.load(f)
                 if "contacts" in data:
                     self.data = data["contacts"]
         except FileNotFoundError:
